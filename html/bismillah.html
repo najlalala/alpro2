@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<style>
+th, td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<h2>The XMLHttpRequest Object</h2>
+
+<form>
+  <input type="text" id="dataInput" placeholder="Enter Data">
+  <button type="button" onclick="sendData()">Send Data</button>
+</form>
+<br>
+<div id="txtHint">Server response will be displayed here...</div>
+
+<script>
+function sendData() {
+  const data = document.getElementById("dataInput").value;
+  if (!data) {
+    document.getElementById("txtHint").innerHTML = "Please enter some data.";
+    return;
+  }
+  
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    if (xhttp.status === 200) {
+      document.getElementById("txtHint").innerHTML = xhttp.responseText;
+    } else {
+      document.getElementById("txtHint").innerHTML = "Failed to send data to the server.";
+    }
+  };
+  
+  xhttp.open("POST", "server.php"); // Ganti "server.php" dengan URL atau endpoint server Anda
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhttp.send("data=" + data);
+}
+</script>
+</body>
+</html>
